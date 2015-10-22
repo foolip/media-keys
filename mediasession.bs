@@ -227,13 +227,6 @@ enum MediaSessionKind {
   "transient-solo",
   "ambient"
 };
-
-dictionary MediaMetadata {
-  DOMString title = "";
-  DOMString artist = "";
-  DOMString album = "";
-  USVString artwork;
-};
 </pre>
 
 {{MediaSession}} objects are simply known as <dfn lt="media session">media
@@ -1226,6 +1219,26 @@ The <dfn>media session deactivation algorithm</dfn> takes one argument,
   </li>
 </ol>
 
+<h2 id="the-mediametadata-interface">The {{MediaMetadata}} interface</h2>
+
+<pre class="idl">
+
+[Constructor(MediaMetadataInit metadata)]
+interface MediaMetadata {
+  readonly attribute DOMString title;
+  readonly attribute DOMString artist;
+  readonly attribute DOMString album;
+  readonly attribute USVString artwork;
+};
+
+dictionary MediaMetadataInit {
+  DOMString title = "";
+  DOMString artist = "";
+  DOMString album = "";
+  USVString artwork = "";
+};
+</pre>
+
 <h2 id="extensions-to-the-htmlmediaelement-interface">Extensions to the
 {{HTMLMediaElement}} interface</h2>
 
@@ -1424,12 +1437,12 @@ When the user agent is to <dfn>resume a web audio object</dfn> for a given
   If metadata is available, providing it will allow for a richer user interface:
 
   <pre class="lang-javascript">
-    audio.session.setMetadata({
+    audio.session.setMetadata(new MediaMetadata({
       title: "Episode Title",
       artist: "Podcast Host",
       album: "Podcast Title",
       artwork: "podcast.png"
-    });
+    }));
   </pre>
 </div>
 
@@ -1457,12 +1470,12 @@ When the user agent is to <dfn>resume a web audio object</dfn> for a given
 
   <pre class="lang-javascript">
     function updateMetadata(event) {
-      audio1.session.setMetadata({
+      audio1.session.setMetadata(new MediaMetadata({
         title: event.target == audio1 ? "Chapter 1" : "Chapter 2",
         artist: "An Author",
         album: "A Book",
         artwork: "book.png"
-      });
+      }));
     }
 
     audio1.addEventListener("play", updateMetadata);
