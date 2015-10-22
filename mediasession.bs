@@ -214,8 +214,7 @@ conforming IDL fragments, as described in the Web IDL specification. [[!WEBIDL]]
 [Constructor(optional MediaSessionKind kind = "content")]
 interface MediaSession {
   readonly attribute MediaSessionKind kind;
-
-  void setMetadata(MediaMetadata metadata);
+  attribute MediaMetadata? metadata;
 
   Promise&lt;void> activate();
   Promise&lt;void> deactivate();
@@ -252,7 +251,7 @@ that <em>can</em> consist of <dfn lt="session title">title</dfn>,
     Returns the <a>media session</a>'s <a>kind</a>.
   </dd>
   <dt>
-    <code><var>session</var> . {{MediaSession/setMetadata(metadata)}}</code>
+    <code><var>session</var> . {{MediaSession/metadata}}</code>
   </dt>
   <dd>
     Provides the user agent with metadata to use when a <a>media session</a> is
@@ -317,39 +316,8 @@ session state">idle</a></code>.
 The <dfn attribute for="MediaSession"><code>kind</code></dfn>
 attribute must return the <a>media session</a>'s <a>kind</a>.
 
-When the <dfn method for="MediaSession"><code>setMetadata(metadata)</code></dfn>
-method is invoked, the user agent must run the following steps:
-
-<ol>
-  <li>
-    Let <var>media session</var> be the current <a>media session</a>.
-  </li>
-  <li>
-    Let <var>baseURL</var> be the <a>API base URL</a> specified by the <a>entry
-    settings object</a>.
-  </li>
-  <li>
-    Set <var>media session</var>'s <a lt="session title">title</a> to
-    <var>metadata</var>'s <code>title</code>.
-  </li>
-  <li>
-    Set <var>media session</var>'s <a>artist name</a> to <var>metadata</var>'s
-    <code>artist</code>.
-  </li>
-  <li>
-    Set <var>media session</var>'s <a>album name</a> to <var>metadata</var>'s
-    <code>album</code>.
-  </li>
-  <li>
-    If <var>metadata</var>'s <code>artwork</code> is present,
-    <a lt="url parser">parse</a> it using <var>baseURL</var>, and if that does
-    not return failure, set <var>media session</var>'s <a>artwork URL</a> to the
-    return value. (Otherwise <a>artwork URL</a> is not set.)
-  </li>
-  <li>
-    Run the <a>fetch steps</a> for <var>media session</var>.
-  </li>
-</ol>
+The <dfn attribute for="MediaSession"><code>metadata</code></dfn>
+attribute must return the <a>media session</a>'s metadata.
 
 The <dfn method for="MediaSession"><code>activate()</code></dfn> method, when
 invoked, must run these steps:
@@ -1239,6 +1207,41 @@ dictionary MediaMetadataInit {
 };
 </pre>
 
+The <dfn constructor
+for="MediaMetadata"><code>MediaMetadata(<var>metadata</var>)</code></dfn>
+constructor, when invoked, must return a new {{MediaMetadata}} object...:
+
+<ol>
+  <li>
+    Let <var>media session</var> be the current <a>media session</a>.
+  </li>
+  <li>
+    Let <var>baseURL</var> be the <a>API base URL</a> specified by the <a>entry
+    settings object</a>.
+  </li>
+  <li>
+    Set <var>media session</var>'s <a lt="session title">title</a> to
+    <var>metadata</var>'s <code>title</code>.
+  </li>
+  <li>
+    Set <var>media session</var>'s <a>artist name</a> to <var>metadata</var>'s
+    <code>artist</code>.
+  </li>
+  <li>
+    Set <var>media session</var>'s <a>album name</a> to <var>metadata</var>'s
+    <code>album</code>.
+  </li>
+  <li>
+    If <var>metadata</var>'s <code>artwork</code> is present,
+    <a lt="url parser">parse</a> it using <var>baseURL</var>, and if that does
+    not return failure, set <var>media session</var>'s <a>artwork URL</a> to the
+    return value. (Otherwise <a>artwork URL</a> is not set.)
+  </li>
+  <li>
+    Run the <a>fetch steps</a> for <var>media session</var>.
+  </li>
+</ol>
+
 <h2 id="extensions-to-the-htmlmediaelement-interface">Extensions to the
 {{HTMLMediaElement}} interface</h2>
 
@@ -1437,12 +1440,12 @@ When the user agent is to <dfn>resume a web audio object</dfn> for a given
   If metadata is available, providing it will allow for a richer user interface:
 
   <pre class="lang-javascript">
-    audio.session.setMetadata(new MediaMetadata({
+    audio.session.metadata = new MediaMetadata({
       title: "Episode Title",
       artist: "Podcast Host",
       album: "Podcast Title",
       artwork: "podcast.png"
-    }));
+    });
   </pre>
 </div>
 
@@ -1470,12 +1473,12 @@ When the user agent is to <dfn>resume a web audio object</dfn> for a given
 
   <pre class="lang-javascript">
     function updateMetadata(event) {
-      audio1.session.setMetadata(new MediaMetadata({
+      audio1.session.metadata = new MediaMetadata({
         title: event.target == audio1 ? "Chapter 1" : "Chapter 2",
         artist: "An Author",
         album: "A Book",
         artwork: "book.png"
-      }));
+      });
     }
 
     audio1.addEventListener("play", updateMetadata);
