@@ -100,6 +100,8 @@ urlPrefix: https://fetch.spec.whatwg.org/; spec: FETCH
         text: response
         text: response type
         text: url; url: request-url
+    type: interface
+        text: Response
     type: dfn;
         text: force Origin header flag
 urlPrefix: https://webaudio.github.io/web-audio-api/; spec: WEBAUDIO
@@ -1196,14 +1198,14 @@ interface MediaMetadata {
   readonly attribute DOMString title;
   readonly attribute DOMString artist;
   readonly attribute DOMString album;
-  readonly attribute USVString artwork;
+  readonly attribute Promise&lt;Response> artwork;
 };
 
 dictionary MediaMetadataInit {
   DOMString title = "";
   DOMString artist = "";
   DOMString album = "";
-  USVString artwork = "";
+  (Response or USVString) artwork;
 };
 </pre>
 

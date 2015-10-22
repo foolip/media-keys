@@ -692,14 +692,14 @@ interface <dfn class="idl-code" data-dfn-type="interface" data-export="" id="med
   readonly attribute DOMString <dfn class="idl-code" data-dfn-for="MediaMetadata" data-dfn-type="attribute" data-export="" data-readonly="" data-type="DOMString " id="dom-mediametadata-title">title<a class="self-link" href="#dom-mediametadata-title"></a></dfn>;
   readonly attribute DOMString <dfn class="idl-code" data-dfn-for="MediaMetadata" data-dfn-type="attribute" data-export="" data-readonly="" data-type="DOMString " id="dom-mediametadata-artist">artist<a class="self-link" href="#dom-mediametadata-artist"></a></dfn>;
   readonly attribute DOMString <dfn class="idl-code" data-dfn-for="MediaMetadata" data-dfn-type="attribute" data-export="" data-readonly="" data-type="DOMString " id="dom-mediametadata-album">album<a class="self-link" href="#dom-mediametadata-album"></a></dfn>;
-  readonly attribute USVString <dfn class="idl-code" data-dfn-for="MediaMetadata" data-dfn-type="attribute" data-export="" data-readonly="" data-type="USVString " id="dom-mediametadata-artwork">artwork<a class="self-link" href="#dom-mediametadata-artwork"></a></dfn>;
+  readonly attribute Promise&lt;<a data-link-type="idl-name" href="https://fetch.spec.whatwg.org/#response">Response</a>> <dfn class="idl-code" data-dfn-for="MediaMetadata" data-dfn-type="attribute" data-export="" data-readonly="" data-type="Promise<Response> " id="dom-mediametadata-artwork">artwork<a class="self-link" href="#dom-mediametadata-artwork"></a></dfn>;
 };
 
 dictionary <dfn class="idl-code" data-dfn-type="dictionary" data-export="" id="dictdef-mediametadatainit">MediaMetadataInit<a class="self-link" href="#dictdef-mediametadatainit"></a></dfn> {
   DOMString <dfn class="idl-code" data-default="&quot;&quot;" data-dfn-for="MediaMetadataInit" data-dfn-type="dict-member" data-export="" data-type="DOMString " id="dom-mediametadatainit-title">title<a class="self-link" href="#dom-mediametadatainit-title"></a></dfn> = "";
   DOMString <dfn class="idl-code" data-default="&quot;&quot;" data-dfn-for="MediaMetadataInit" data-dfn-type="dict-member" data-export="" data-type="DOMString " id="dom-mediametadatainit-artist">artist<a class="self-link" href="#dom-mediametadatainit-artist"></a></dfn> = "";
   DOMString <dfn class="idl-code" data-default="&quot;&quot;" data-dfn-for="MediaMetadataInit" data-dfn-type="dict-member" data-export="" data-type="DOMString " id="dom-mediametadatainit-album">album<a class="self-link" href="#dom-mediametadatainit-album"></a></dfn> = "";
-  USVString <dfn class="idl-code" data-default="&quot;&quot;" data-dfn-for="MediaMetadataInit" data-dfn-type="dict-member" data-export="" data-type="USVString " id="dom-mediametadatainit-artwork">artwork<a class="self-link" href="#dom-mediametadatainit-artwork"></a></dfn> = "";
+  (<a data-link-type="idl-name" href="https://fetch.spec.whatwg.org/#response">Response</a> or USVString) <dfn class="idl-code" data-dfn-for="MediaMetadataInit" data-dfn-type="dict-member" data-export="" data-type="(Response or USVString) " id="dom-mediametadatainit-artwork">artwork<a class="self-link" href="#dom-mediametadatainit-artwork"></a></dfn>;
 };
 </pre>
    <p>The <dfn class="idl-code" data-dfn-for="MediaMetadata" data-dfn-type="constructor" data-export="" id="dom-mediametadata-mediametadata"><code>MediaMetadata(<var>metadata</var>)</code><a class="self-link" href="#dom-mediametadata-mediametadata"></a></dfn> constructor, when invoked, must return a new <code class="idl"><a data-link-type="idl" href="#mediametadata">MediaMetadata</a></code> object...:</p>
@@ -969,6 +969,7 @@ session</a><span>, in §6.3</span>
    <li>
     <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a> defines the following terms:
     <ul>
+     <li><a href="https://fetch.spec.whatwg.org/#response">Response</a>
      <li><a href="https://fetch.spec.whatwg.org/#concept-request-context">context</a>
      <li><a href="https://fetch.spec.whatwg.org/#concept-request-context-frame-type">context frame type</a>
      <li><a href="https://fetch.spec.whatwg.org/#concept-fetch">fetch</a>
@@ -1066,14 +1067,14 @@ interface <a href="#mediametadata">MediaMetadata</a> {
   readonly attribute DOMString <a data-readonly="" data-type="DOMString " href="#dom-mediametadata-title">title</a>;
   readonly attribute DOMString <a data-readonly="" data-type="DOMString " href="#dom-mediametadata-artist">artist</a>;
   readonly attribute DOMString <a data-readonly="" data-type="DOMString " href="#dom-mediametadata-album">album</a>;
-  readonly attribute USVString <a data-readonly="" data-type="USVString " href="#dom-mediametadata-artwork">artwork</a>;
+  readonly attribute Promise&lt;<a data-link-type="idl-name" href="https://fetch.spec.whatwg.org/#response">Response</a>> <a data-readonly="" data-type="Promise<Response> " href="#dom-mediametadata-artwork">artwork</a>;
 };
 
 dictionary <a href="#dictdef-mediametadatainit">MediaMetadataInit</a> {
   DOMString <a data-default="&quot;&quot;" data-type="DOMString " href="#dom-mediametadatainit-title">title</a> = "";
   DOMString <a data-default="&quot;&quot;" data-type="DOMString " href="#dom-mediametadatainit-artist">artist</a> = "";
   DOMString <a data-default="&quot;&quot;" data-type="DOMString " href="#dom-mediametadatainit-album">album</a> = "";
-  USVString <a data-default="&quot;&quot;" data-type="USVString " href="#dom-mediametadatainit-artwork">artwork</a> = "";
+  (<a data-link-type="idl-name" href="https://fetch.spec.whatwg.org/#response">Response</a> or USVString) <a data-type="(Response or USVString) " href="#dom-mediametadatainit-artwork">artwork</a>;
 };
 
 partial interface <a class="idl-code" data-link-type="interface" href="https://html.spec.whatwg.org/multipage/embedded-content.html#htmlmediaelement">HTMLMediaElement</a> {
