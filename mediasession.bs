@@ -1420,6 +1420,17 @@ When the user agent is to <dfn>resume a web audio object</dfn> for a given
     audio.session = new MediaSession(); // "content" is the default kind
     audio.play();
   </pre>
+
+  If metadata is available, providing it will allow for a richer user interface:
+
+  <pre class="lang-javascript">
+    audio.session.setMetadata({
+      title: "Episode Title",
+      artist: "Podcast Host",
+      album: "Podcast Title",
+      artwork: "podcast.png"
+    });
+  </pre>
 </div>
 
 <div class="example">
@@ -1440,6 +1451,23 @@ When the user agent is to <dfn>resume a web audio object</dfn> for a given
       audio2.play();
     });
   </pre>
+
+  Because the session is shared, the metadata must be updated to reflect what is
+  currently playing.
+
+  <pre class="lang-javascript">
+    function updateMetadata(event) {
+      audio1.session.setMetadata({
+        title: event.target == audio1 ? "Chapter 1" : "Chapter 2",
+        artist: "An Author",
+        album: "A Book",
+        artwork: "book.png"
+      });
+    }
+
+    audio1.addEventListener("play", updateMetadata);
+    audio2.addEventListener("play", updateMetadata);
+  </pre>
 </div>
 
 <div class="example">
@@ -1456,31 +1484,6 @@ When the user agent is to <dfn>resume a web audio object</dfn> for a given
     });
   </pre>
 </div>
-
-<h3 id="example-setting-media-session-metadata">Setting media session metadata</h3>
-
-When a <code><a lt="content media state">Content</a></code>-based <a>media
-session</a> is <code><a lt="active media session state">active</a></code> it may
-be possible to display metadata within platform-level interfaces. Media session
-metadata can be added at any time to update these interfaces:
-
-<pre class="lang-javascript">
-// Set some media session metadata
-// to display to the user
-mySession.setMetadata({
-  title: "Demo Track 1",
-  artwork: "/resources/cover1.png"
-});
-
-// ... time passes ...
-
-// Change the media session metadata
-// to display to the user
-mySession.setMetadata({
-  title: "Demo Track 2",
-  artwork: "/resources/cover2.png"
-});
-  </pre>
 
 <h2 id="acknowledgments" class="no-num">Acknowledgments</h2>
 

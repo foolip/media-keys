@@ -128,11 +128,7 @@ media session from an <code class="idl"><span>HTMLMediaElement</span></code> obj
       <li><a href="#interrupting-a-media-session-from-an-audiocontext-object"><span class="secno">6.1</span> <span class="content">Interrupting a
 media session from an <code class="idl"><span>AudioContext</span></code> object</span></a>
      </ul>
-    <li>
-     <a href="#examples"><span class="secno">7</span> <span class="content">Examples</span></a>
-     <ul class="toc">
-      <li><a href="#example-setting-media-session-metadata"><span class="secno">7.1</span> <span class="content">Setting media session metadata</span></a>
-     </ul>
+    <li><a href="#examples"><span class="secno">7</span> <span class="content">Examples</span></a>
     <li><a href="#acknowledgments"><span class="secno"></span> <span class="content">Acknowledgments</span></a>
     <li>
      <a href="#index"><span class="secno"></span> <span class="content">Index</span></a>
@@ -797,15 +793,22 @@ media session from an <code class="idl"><a data-link-type="idl" href="https://we
    <p>When the user agent is to <dfn data-dfn-type="dfn" data-noexport="" id="resume-a-web-audio-object">resume a web audio object<a class="self-link" href="#resume-a-web-audio-object"></a></dfn> for a given <code class="idl"><a data-link-type="idl" href="https://webaudio.github.io/web-audio-api/#audiocontext">AudioContext</a></code> object it must invoke that <code class="idl"><a data-link-type="idl" href="https://webaudio.github.io/web-audio-api/#audiocontext">AudioContext</a></code> object’s <code class="idl"><a data-link-type="idl" href="https://webaudio.github.io/web-audio-api/#widl-AudioContext-resume-Promise-void">resume()</a></code> method.</p>
    <h2 class="heading settled" data-level="7" id="examples"><span class="secno">7. </span><span class="content">Examples</span><a class="self-link" href="#examples"></a></h2>
    <p><em>This section is non-normative.</em></p>
-   <div class="example" id="example-f3241962">
-    <a class="self-link" href="#example-f3241962"></a> For music or podcasts, using a <a data-link-type="dfn" href="#media-session">media session</a> of <a data-link-type="dfn" href="#kind">kind</a> "<code><a data-link-type="dfn" href="#content">content</a></code>" can be appropriate. 
+   <div class="example" id="example-cf7b2ca4">
+    <a class="self-link" href="#example-cf7b2ca4"></a> For music or podcasts, using a <a data-link-type="dfn" href="#media-session">media session</a> of <a data-link-type="dfn" href="#kind">kind</a> "<code><a data-link-type="dfn" href="#content">content</a></code>" can be appropriate. 
 <pre class="lang-javascript highlight"><span class="kd">var</span> <span class="nx">audio</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">"audio"</span><span class="p">);</span>
 <span class="nx">audio</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s2">"podcast.mp3"</span><span class="p">;</span>
 <span class="nx">audio</span><span class="p">.</span><span class="nx">session</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MediaSession</span><span class="p">();</span> <span class="c1">// "content" is the default kind</span>
 <span class="nx">audio</span><span class="p">.</span><span class="nx">play</span><span class="p">();</span></pre>
+    <p>If metadata is available, providing it will allow for a richer user interface:</p>
+<pre class="lang-javascript highlight"><span class="nx">audio</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">setMetadata</span><span class="p">({</span>
+  <span class="nx">title</span><span class="o">:</span> <span class="s2">"Episode Title"</span><span class="p">,</span>
+  <span class="nx">artist</span><span class="o">:</span> <span class="s2">"Podcast Host"</span><span class="p">,</span>
+  <span class="nx">album</span><span class="o">:</span> <span class="s2">"Podcast Title"</span><span class="p">,</span>
+  <span class="nx">artwork</span><span class="o">:</span> <span class="s2">"podcast.png"</span>
+<span class="p">});</span></pre>
    </div>
-   <div class="example" id="example-fa4dbfe6">
-    <a class="self-link" href="#example-fa4dbfe6"></a> For playlists or chapters of an audio book, multiple <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/embedded-content.html#media-element">media elements</a> can
+   <div class="example" id="example-675520b2">
+    <a class="self-link" href="#example-675520b2"></a> For playlists or chapters of an audio book, multiple <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/embedded-content.html#media-element">media elements</a> can
   share a single <a data-link-type="dfn" href="#media-session">media session</a>. 
 <pre class="lang-javascript highlight"><span class="kd">var</span> <span class="nx">audio1</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">"audio"</span><span class="p">);</span>
 <span class="nx">audio1</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s2">"chapter1.mp3"</span><span class="p">;</span>
@@ -819,6 +822,19 @@ media session from an <code class="idl"><a data-link-type="idl" href="https://we
 <span class="nx">audio1</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"ended"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
   <span class="nx">audio2</span><span class="p">.</span><span class="nx">play</span><span class="p">();</span>
 <span class="p">});</span></pre>
+    <p>Because the session is shared, the metadata must be updated to reflect what is
+  currently playing.</p>
+<pre class="lang-javascript highlight"><span class="kd">function</span> <span class="nx">updateMetadata</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">audio1</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">setMetadata</span><span class="p">({</span>
+    <span class="nx">title</span><span class="o">:</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span> <span class="o">==</span> <span class="nx">audio1</span> <span class="o">?</span> <span class="s2">"Chapter 1"</span> <span class="o">:</span> <span class="s2">"Chapter 2"</span><span class="p">,</span>
+    <span class="nx">artist</span><span class="o">:</span> <span class="s2">"An Author"</span><span class="p">,</span>
+    <span class="nx">album</span><span class="o">:</span> <span class="s2">"A Book"</span><span class="p">,</span>
+    <span class="nx">artwork</span><span class="o">:</span> <span class="s2">"book.png"</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="nx">audio1</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"play"</span><span class="p">,</span> <span class="nx">updateMetadata</span><span class="p">);</span>
+<span class="nx">audio2</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"play"</span><span class="p">,</span> <span class="nx">updateMetadata</span><span class="p">);</span></pre>
    </div>
    <div class="example" id="example-41f7256f">
     <a class="self-link" href="#example-41f7256f"></a> For games, using a <a data-link-type="dfn" href="#media-session">media session</a> of <a data-link-type="dfn" href="#kind">kind</a> "<code><a data-link-type="dfn" href="#ambient">ambient</a></code>" can be appropriate. Because <code class="idl"><a data-link-type="idl" href="https://webaudio.github.io/web-audio-api/#audiocontext">AudioContext</a></code> objects are created in the "<code class="idl"><a data-link-type="idl" href="https://webaudio.github.io/web-audio-api/#idl-def-AudioContextState.running">running</a></code>" state, it’s necessary to suspend
@@ -829,26 +845,6 @@ media session from an <code class="idl"><a data-link-type="idl" href="https://we
   <span class="nx">context</span><span class="p">.</span><span class="nx">resume</span><span class="p">();</span>
 <span class="p">});</span></pre>
    </div>
-   <h3 class="heading settled" data-level="7.1" id="example-setting-media-session-metadata"><span class="secno">7.1. </span><span class="content">Setting media session metadata</span><a class="self-link" href="#example-setting-media-session-metadata"></a></h3>
-   <p>When a <code><a data-link-type="dfn">Content</a></code>-based <a data-link-type="dfn" href="#media-session">media
-session</a> is <code><a data-link-type="dfn" href="#active-media-session-state">active</a></code> it may
-be possible to display metadata within platform-level interfaces. Media session
-metadata can be added at any time to update these interfaces:</p>
-<pre class="lang-javascript highlight"><span class="c1">// Set some media session metadata</span>
-<span class="c1">// to display to the user</span>
-<span class="nx">mySession</span><span class="p">.</span><span class="nx">setMetadata</span><span class="p">({</span>
-  <span class="nx">title</span><span class="o">:</span> <span class="s2">"Demo Track 1"</span><span class="p">,</span>
-  <span class="nx">artwork</span><span class="o">:</span> <span class="s2">"/resources/cover1.png"</span>
-<span class="p">});</span>
-
-<span class="c1">// ... time passes ...</span>
-
-<span class="c1">// Change the media session metadata</span>
-<span class="c1">// to display to the user</span>
-<span class="nx">mySession</span><span class="p">.</span><span class="nx">setMetadata</span><span class="p">({</span>
-  <span class="nx">title</span><span class="o">:</span> <span class="s2">"Demo Track 2"</span><span class="p">,</span>
-  <span class="nx">artwork</span><span class="o">:</span> <span class="s2">"/resources/cover2.png"</span>
-<span class="p">});</span></pre>
    <h2 class="no-num heading settled" id="acknowledgments"><span class="content">Acknowledgments</span><a class="self-link" href="#acknowledgments"></a></h2>
    <p>The editor would like to thank Paul Adenot, Jake Archibald, Tab Atkins, Jonathan
 Bailey, Marcos Caceres, Domenic Denicola, Ralph Giles, Anne van Kesteren, Tobie
